@@ -3,7 +3,14 @@ package com.ridho.project
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import com.ridho.project.databinding.ActivityMainBinding
+import com.ridho.project.databinding.ContentMainBinding
+// Hapus import yang tidak terpakai jika Anda tidak menggunakannya di MainActivity:
+// import android.content.pm.PackageManager
+// import android.graphics.Color
+// import android.location.Geocoder
+// import android.os.Build
 
 class MainActivity : AppCompatActivity() {
 
@@ -14,8 +21,18 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.btnJemputSampah.setOnClickListener {
-            val intent = Intent(this, MapsActivity::class.java)
+        // Panggil fungsi inisialisasi listener
+        setInitLayout()
+
+    }
+
+    private fun setInitLayout(){
+
+        // Listener untuk cvInput (Jemput Sampah)
+        // Ini akan berhasil jika ActivityMainBinding sudah mengikat view dengan benar
+
+        binding.contentMainLayout.cvInput.setOnClickListener { v: View? ->
+            val intent = Intent(this@MainActivity, MapsActivity::class.java)
             startActivity(intent)
         }
     }

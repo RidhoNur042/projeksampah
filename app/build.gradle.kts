@@ -35,12 +35,10 @@ android {
     }
 
     kotlinOptions {
-        // Pastikan kompatibel dengan JVM toolchain 17
         jvmTarget = "17"
     }
 }
 
-// Tentukan toolchain Kotlin/JVM
 kotlin {
     jvmToolchain(17)
 }
