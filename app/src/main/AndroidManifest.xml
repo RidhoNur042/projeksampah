@@ -18,6 +18,9 @@
         <activity
             android:name=".MapsActivity"
             android:exported="false" />
+        <activity
+            android:name=".JenisSampahActivity" />
+
 
         <activity
             android:name=".MainActivity"
