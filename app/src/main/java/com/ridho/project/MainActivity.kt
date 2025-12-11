@@ -28,12 +28,13 @@ class MainActivity : AppCompatActivity() {
 
     private fun setInitLayout(){
 
-        // Listener untuk cvInput (Jemput Sampah)
-        // Ini akan berhasil jika ActivityMainBinding sudah mengikat view dengan benar
-
-        binding.contentMainLayout.cvInput.setOnClickListener { v: View? ->
+        binding.tvCurrentLocation.setOnClickListener { v: View? ->
             val intent = Intent(this@MainActivity, MapsActivity::class.java)
             startActivity(intent)
         }
+        binding.contentMainLayout.cvInput.setOnClickListener { v: View? ->
+                val intent = Intent(this@MainActivity, InputDataActivity::class.java)
+                startActivity(intent)
+            }
     }
 }
