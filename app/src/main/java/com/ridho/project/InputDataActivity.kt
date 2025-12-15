@@ -30,7 +30,6 @@ class InputDataActivity : AppCompatActivity() {
 
     lateinit var inputDataViewModel: InputDataViewModel
 
-    // Variabel yang akan diinisialisasi di setInputData/setInitLayout
     lateinit var strNama: String
     lateinit var strTanggal: String
     lateinit var strAlamat: String
@@ -68,7 +67,6 @@ class InputDataActivity : AppCompatActivity() {
     }
 
     private fun setInitLayout() {
-        // Ambil data dari resources (pastikan resources/values/strings.xml memiliki kategori_sampah dan harga_perkilo)
         strKategori = resources.getStringArray(R.array.kategori_sampah)
         strHarga = resources.getStringArray(R.array.harga_perkilo)
 
@@ -77,7 +75,6 @@ class InputDataActivity : AppCompatActivity() {
         val arrayBahasa = ArrayAdapter(this@InputDataActivity, android.R.layout.simple_list_item_1, strKategori)
         arrayBahasa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
-        // Gunakan binding untuk mengakses spKategori
         binding.spKategori.adapter = arrayBahasa
 
         binding.spKategori.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -89,9 +86,6 @@ class InputDataActivity : AppCompatActivity() {
             ) {
                 strKategoriSelected = parent.getItemAtPosition(position).toString()
                 strHargaSelected = strHarga[position]
-                // binding.spKategori.isEnabled = true // Baris ini tidak perlu
-
-                // Pastikan strHargaSelected adalah integer yang valid
                 countHarga = try {
                     strHargaSelected.toInt()
                 } catch (e: NumberFormatException) {
@@ -178,7 +172,7 @@ class InputDataActivity : AppCompatActivity() {
                     strNama,
                     strKategoriSelected,
                     countBerat,
-                    countTotal, // Menggunakan countTotal untuk Total Harga
+                    countTotal,
                     strTanggal,
                     strAlamat,
                     strCatatan

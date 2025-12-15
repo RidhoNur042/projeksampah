@@ -20,6 +20,8 @@
             android:exported="false" />
         <activity
             android:name=".JenisSampahActivity" />
+        <activity
+            android:name=".RiwayatActivity"/>
 
 
         <activity

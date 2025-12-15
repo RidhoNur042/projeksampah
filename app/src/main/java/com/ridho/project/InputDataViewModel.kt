@@ -2,50 +2,48 @@ package com.ridho.project.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import com.ridho.project.database.DatabaseClient.Companion.getInstance
+import com.ridho.project.database.dao.DatabaseDao
+import com.ridho.project.model.ModelDatabase
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.schedulers.Schedulers
 
-// Import model dan repository Anda di sini
-// import com.ridho.project.model.ModelSampah
-// import com.ridho.project.repository.SampahRepository
 
 class InputDataViewModel(application: Application) : AndroidViewModel(application) {
 
-    // Asumsi: Anda memiliki Repository dan Room Database
-    // private val sampahRepository: SampahRepository
+    var databaseDao: DatabaseDao?
 
-    init {
-        // Asumsi: Inisialisasi Database dan Repository
-        // val sampahDao = DatabaseClient.getInstance(application).appDatabase.sampahDao()
-        // sampahRepository = SampahRepository(sampahDao)
-    }
-
-    // Fungsi yang dipanggil dari Activity
     fun addDataSampah(
-        nama: String,
-        kategori: String,
+        nama_pengguna: String,
+        jenis_sampah: String,
         berat: Int,
-        hargaTotal: Int,
+        harga: Int, // Ini adalah total uang yang diterima
         tanggal: String,
         alamat: String,
         catatan: String
     ) {
-        // Lakukan operasi penyimpanan data ke database di sini
-        // Biasanya menggunakan Kotlin Coroutines (viewModelScope.launch)
+        Completable.fromAction {
+            val modelDatabase = ModelDatabase()
+            modelDatabase.namaPengguna = nama_pengguna
+            modelDatabase.jenisSampah = jenis_sampah
+            modelDatabase.berat = berat
+            modelDatabase.harga = harga
+            modelDatabase.tanggal = tanggal
+            modelDatabase.tipe = "Masuk"
+            modelDatabase.jumlah = harga
+            modelDatabase.alamat = alamat
+            modelDatabase.catatan = catatan
 
-        /*
-        viewModelScope.launch(Dispatchers.IO) {
-            val dataSampah = ModelSampah(
-                nama = nama,
-                kategori = kategori,
-                berat = berat,
-                hargaTotal = hargaTotal,
-                tanggal = tanggal,
-                alamat = alamat,
-                catatan = catatan
-            )
-            sampahRepository.insert(dataSampah)
+
+            databaseDao?.insertData(modelDatabase)
         }
-        */
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe()
+    }
 
-        // Karena kita tidak memiliki Model dan Repository, biarkan kosong sementara
+    init {
+        databaseDao = getInstance(application)?.appDatabase?.databaseDao()
     }
 }

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import com.ridho.project.databinding.ActivityMainBinding
+
 import com.ridho.project.databinding.ContentMainBinding
 // Hapus import yang tidak terpakai jika Anda tidak menggunakannya di MainActivity:
 // import android.content.pm.PackageManager
@@ -20,8 +21,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        // Panggil fungsi inisialisasi listener
         setInitLayout()
 
     }
@@ -38,6 +37,10 @@ class MainActivity : AppCompatActivity() {
         }
         binding.contentMainLayout.cvKategori.setOnClickListener {
             val intent = Intent(this@MainActivity, JenisSampahActivity::class.java)
+            startActivity(intent)
+        }
+        binding.contentMainLayout.cvHistory.setOnClickListener { v: View? ->
+            val intent = Intent(this@MainActivity, RiwayatActivity::class.java)
             startActivity(intent)
         }
     }
