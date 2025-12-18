@@ -1,6 +1,7 @@
 package com.ridho.project.viewmodel
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import com.ridho.project.database.DatabaseClient.Companion.getInstance
 import com.ridho.project.database.dao.DatabaseDao
@@ -12,38 +13,44 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 
 class InputDataViewModel(application: Application) : AndroidViewModel(application) {
 
-    var databaseDao: DatabaseDao?
+    private val databaseDao: DatabaseDao =
+        getInstance(application).appDatabase.databaseDao()
 
     fun addDataSampah(
-        nama_pengguna: String,
-        jenis_sampah: String,
+        namaPengguna: String,
+        jenisSampah: String,
         berat: Int,
-        harga: Int, // Ini adalah total uang yang diterima
+        harga: Int,
         tanggal: String,
         alamat: String,
         catatan: String
     ) {
-        Completable.fromAction {
-            val modelDatabase = ModelDatabase()
-            modelDatabase.namaPengguna = nama_pengguna
-            modelDatabase.jenisSampah = jenis_sampah
-            modelDatabase.berat = berat
-            modelDatabase.harga = harga
-            modelDatabase.tanggal = tanggal
-            modelDatabase.tipe = "Masuk"
-            modelDatabase.jumlah = harga
-            modelDatabase.alamat = alamat
-            modelDatabase.catatan = catatan
 
+        val data = ModelDatabase(
+            namaPengguna = namaPengguna,
+            jenisSampah = jenisSampah,
+            berat = berat,
+            harga = harga,
+            tanggal = tanggal,
+            alamat = alamat,
+            catatan = catatan,
+            tipe = "Masuk",
+            jumlah = harga,
+            keterangan = "Setoran"
+        )
 
-            databaseDao?.insertData(modelDatabase)
-        }
+        databaseDao.insertData(data)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe()
-    }
-
-    init {
-        databaseDao = getInstance(application)?.appDatabase?.databaseDao()
+            .subscribe(
+                {
+                    // INSERT BERHASIL
+                    Log.d("DB_VM", "Insert berhasil")
+                },
+                { error ->
+                    // INSERT GAGAL
+                    Log.e("DB_VM", "Insert gagal", error)
+                }
+            )
     }
 }

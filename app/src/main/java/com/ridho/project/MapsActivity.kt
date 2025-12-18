@@ -56,7 +56,7 @@ class MapsActivity : AppCompatActivity() {
 
     private fun setupMap() {
         // Set titik awal (Jakarta)
-        val startPoint = GeoPoint(-6.200000, 106.816666)
+        val startPoint = GeoPoint( -7.87538490, 110.42620880)
         map.controller.setZoom(12.0)
         map.controller.setCenter(startPoint)
 
